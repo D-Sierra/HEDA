@@ -33,3 +33,7 @@ shiny (AGPL-3), shinydashboard (MIT), ggplot2 (GPL-2), tidyverse (MIT), hlapro (
 ## Contact
 Daniel Álvarez de la Sierra
 daniel.alvarez@idival.org
+
+## Acknowledgements
+
+Special thanks to [Leon Cyro](https://www.leonreteig.com/) for his help. His [hlapro](https://github.com/lcreteig/hlapro) library has been crucial for the development of this tool
