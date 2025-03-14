@@ -1,4 +1,4 @@
-# HLA Eplet-based Delisting Assistant (HEDA) isa program designed to 
+# HLA Eplet-based Delisting Assistant (HEDA) is a program designed to 
 # facilitate the delisting process of prohibited HLA alleles in highly 
 # sensitized patients using eplet incompatibility as the base criterion.
 # Copyright (C) 2024  Daniel Álvarez-Sierra and David San Segundo
