@@ -10,7 +10,7 @@ A copy of the license can be found in the [LICENSE](LICENSE) file included in th
 
 ## Copyright Notice
 
-Copyright (C) [Year] [Your Name] and [Co-Author's Name]
+Copyright (C) 2025 Daniel Álvarez-Sierra and David San Segundo Arribas
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -18,26 +18,18 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-## Dependencies
-
-* [List of dependencies and their licenses, e.g., Shiny (MIT License), dplyr (GPL-2)]
-
 ## Installation
 
-[Detailed installation instructions, including any required software or libraries]
+This repository includes the files required to use interactive HEDA app using Shiny. Download or clone the content of this repository to use it locally.
 
 ## Usage
 
-[Detailed instructions on how to use the application, including examples and screenshots if necessary]
+Detailed instructions for using the application can be found in the Tutorial section upon launching HEDA.
 
-## Contributing
+## Dependencies
 
-[Guidelines for contributing to the project, including how to submit bug reports and pull requests]
+shiny (AGPL-3), shinydashboard (MIT), ggplot2 (GPL-2), tidyverse (MIT), hlapro (MIT), readxl (GPL-2), magrittr (MIT), gridExtra (GPL-2), DT (GPL-3), readr (MIT), htmltools (MIT), rmarkdown (GPL-3), knitr (GPL-2), kableExtra (MIT), shinyjs (MIT)
 
 ## Contact
-
-[Your contact information, such as email address or GitHub profile]
-
-## Acknowledgements
-
-[Any acknowledgements for people or organizations that helped with the project]
+Daniel Álvarez de la Sierra
+daniel.alvarez@idival.org
