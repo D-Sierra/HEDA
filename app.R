@@ -41,21 +41,17 @@ luminex_alleles <- readRDS(file.path(getwd(), "data", "luminex_alleles.rds"))
 
 #App dashbord
 ui <- dashboardPage(
-  
-  dashboardHeader(title = "HEDA"),
+  skin = "black",
+  dashboardHeader(title = span(img(src = "logo.png", width = 150, height = 50))),
   
   dashboardSidebar(
     sidebarMenu(
       menuItem("Data input", tabName = "Data_input", icon = icon("droplet"), startExpanded = T,
                menuSubItem('Input', tabName = "Input", icon = NULL),
                menuSubItem('Summary', tabName = "Summary", icon = NULL)),
-      
       menuItem("Delisting 1", tabName = "DL1", icon = icon("list-check")),
-      
       menuItem("Delisting 2/3", tabName = "DL23", icon = icon("list-check")),
-      
       menuItem("Tutorial", tabName = "help", icon = icon("question-circle")),
-      
       menuItem("Contact", tabName = "Contact", icon = icon("envelope"))
     )
   ),
@@ -64,6 +60,7 @@ ui <- dashboardPage(
     useShinyjs(),
     tabItems(
       tabItem(tabName = "Input",
+              tags$h1("HLA eplet-based Delisting Assistant (HEDA)", style = "font-weight: bold;"),
               fluidRow(
                 box(
                     title = "HLA typing",
@@ -117,8 +114,6 @@ ui <- dashboardPage(
               fluidRow(
                 box(
                   title = "Imputation of DQA1 locus",
-                  status = "success",
-                  solidHeader = TRUE,
                   width = 8,
                   DTOutput(outputId = "typing_table")
                 ),
@@ -126,22 +121,16 @@ ui <- dashboardPage(
                   width = 4,
                   box(
                     title = "HLA missmatch with previous donors",
-                    status = "warning",
-                    solidHeader = TRUE,
                     width = 12,
                     tags$p("Unique alleles present in previous donors but not in the recipient, which will be considered to identify high-risk eplets."),
                     textOutput(outputId = "allele_MM")),
                   box(
                     title = "Complement-fixing DSA",
-                    status = "danger",
-                    solidHeader = TRUE,
                     width = 12,
                     textOutput(outputId = "alleles_compl")))),
               fluidRow(
                 box(
                   title = "Eplet assigment",
-                  status = "success",
-                  solidHeader = TRUE,
                   width = 12,
                   tags$p("List of unique eplets present in the recipient and previous donors."),
                   tags$p("These listings are calculated according to the user-defined eplet filtering parameters in the Delisting 2/3 section."),
@@ -174,8 +163,6 @@ ui <- dashboardPage(
                 box(
                   title = "DELISTING - LEVEL 1",
                   width = 12,
-                  status = "success",
-                  solidHeader = TRUE,
                   fluidRow(
                     column(
                       width = 6,
@@ -240,9 +227,7 @@ ui <- dashboardPage(
               fluidRow(
                 box(
                   title = "Prohibited Eplets",
-                  status = "warning",
                   width = 12,
-                  solidHeader = TRUE,
                   tags$p("Unique eplets present in previous donors but not in the recipient that meet the selected criteria."),
                   textOutput(outputId = "eplet_MM"))
               ),
@@ -250,8 +235,6 @@ ui <- dashboardPage(
                 box(
                   title = "DELISTING - LEVELS 2 AND 3",
                   width = 12,
-                  status = "success",
-                  solidHeader = TRUE,
                   DTOutput(outputId = "selectedDL23")
                 )
               ),
