@@ -1,0 +1,56 @@
+---
+output: pdf_document
+params:
+  max: NA
+  min: NA
+  time: NA
+  receptorHLA: NA
+  ID: NA
+  DL1_table: NA
+  DL1_plot: NA
+  responsable: NA
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{graphicx}
+  - \usepackage{float}
+  - \definecolor{bluetitle}{HTML}{0071BC}
+always_allow_html: true
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+options(knitr.kable.NA = '')
+```
+
+\begin{huge}
+\textcolor{bluetitle}{DL1 report - Receptor `r params$ID`}
+\end{huge}
+
+Date of report: `r Sys.Date()` \newline 
+Author: `r params$responsable` \newline\newline 
+
+**Tipaje del receptor** \newline\newline 
+`r gsub("\\*", "\\\\*", params$receptorHLA)` \newline\newline
+
+**Análisis DL1**
+
+The parameters used for the automatic filtering of potential DL1 candidate specificities are detailed below. Firstly, all those specificities that at some time presented antibodies of the receptor against them with MFIs higher than **`r params$max`** were considered positive. From the resulting set of specificities, those that have negativised were considered candidates. Negativisation was defined as MFI results below **`r params$min`** maintained for at least **`r params$time`** months prior to the generation of this report.\newline\newline
+
+**Especificidades candidatas a DL1**
+
+For the final selection, it is necessary to consider those specificities that are complement-fixing (column comp_fixation) or that were found in previous donors (column allele_MM). If the corresponding information has been entered into the program, both situations are shown annotated in the following table.\newline
+
+```{r}
+# Mostrar la tabla
+kable(params$DL1_table, format = "latex", booktabs = TRUE) %>%
+  kable_styling(latex_options = c("scale_down")) %>%
+  kableExtra::kable_styling(latex_options = "hold_position")
+```
+
+```{r, fig.width=7, fig.height=3, fig.align= "center"}
+# Mostrar la gráfica
+params$DL1_plot
+```
+
+
