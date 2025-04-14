@@ -38,7 +38,7 @@ check_alleles <- function(typing) {
     #Loop to iterate through each pattern to check if it is found on the allele
     for (j in seq_along(patterns)) {
       if (grepl(patterns[j], alleles[i], perl = TRUE)) {
-        match_found <- TRUE #If pattern j is found on the allele, match_found change to TRUE
+        match_found <- TRUE #If pattern j is found on the allele, match_found changes to TRUE
         break
       }
     }
@@ -79,7 +79,7 @@ DL1_QC_alleles <- function(df_luminex = df_luminex){
 }
 
 ###################################################################
-#Quality control function for alleles in the table for DL1
+#Quality control function for dates in the table for DL1
 DL1_QC_dates <- function(df_luminex = df_luminex){
   colnames(df_luminex) <- df_luminex[1,]
   df_luminex <- df_luminex[-1,]

@@ -29,28 +29,32 @@ DQA1_imputation <- function(df){
   
   #DQA1 assignment based on DQB1 and DRB1 typing
   for (i in 1:nrow(df)) {
-    for (j in 1:2) {
-      dqb_value <- ifelse(j == 1, df[i, "DQB11"], df[i, "DQB12"]) #For each row, both columns of the DQB1 typing are evaluated separately
-      drb_value <- paste(df[i, "DRB11"], ", ", df[i, "DRB12"])   #For each row, the value of the two DRB1 alleles are concatenated for joint evaluation
-      
-      #For each DQB1 allele, the rows containing that allele are listed in the equivalence table
-      index <- which(sapply(equivalence_table[, "DQB1"], function(x) any(grepl(x, dqb_value, perl = TRUE))))
-      #If only a single index is obtained, there is no ambiguity in the assignment of DQA1
-      if (length(index) == 1) {
-        df[i, ifelse(j == 1, "DQA11", "DQA12")] <- equivalence_table[index, "DQA1"]
-        #If the index obtained has more than one value then the DQB1 allele can be assigned to more than one DQA1 allele depending on the presence or absence of a particular DRB1 allele
-        #By means of regex, the presence of DRB1 alleles is evaluated to resolve the ambiguity in the equivalence table
-        #A single index of the equivalence table is obtained and the corresponding value of DQA1 is assigned to the column of the dataframe
-      } else if (length(index) > 1) {
-        index2 <- sapply(equivalence_table[index, "DRB1"], function(x) any(grepl(x, drb_value, perl = TRUE)))
-        if (any(index2)) {
-          df[i, ifelse(j == 1, "DQA11", "DQA12")] <- equivalence_table[index[index2], "DQA1"]
+    if (is.na(df[i, "DQA11"]) & is.na(df[i, "DQA12"])){
+      for (j in 1:2) {
+        dqb_value <- ifelse(j == 1, df[i, "DQB11"], df[i, "DQB12"]) #For each row, both columns of the DQB1 typing are evaluated separately
+        drb_value <- paste(df[i, "DRB11"], ", ", df[i, "DRB12"])   #For each row, the value of the two DRB1 alleles are concatenated for joint evaluation
+        
+        #For each DQB1 allele, the rows containing that allele are listed in the equivalence table
+        index <- which(sapply(equivalence_table[, "DQB1"], function(x) any(grepl(x, dqb_value, perl = TRUE))))
+        #If only a single index is obtained, there is no ambiguity in the assignment of DQA1
+        if (length(index) == 1) {
+          df[i, ifelse(j == 1, "DQA11", "DQA12")] <- equivalence_table[index, "DQA1"]
+          #If the index obtained has more than one value then the DQB1 allele can be assigned to more than one DQA1 allele depending on the presence or absence of a particular DRB1 allele
+          #By means of regex, the presence of DRB1 alleles is evaluated to resolve the ambiguity in the equivalence table
+          #A single index of the equivalence table is obtained and the corresponding value of DQA1 is assigned to the column of the dataframe
+        } else if (length(index) > 1) {
+          index2 <- sapply(equivalence_table[index, "DRB1"], function(x) any(grepl(x, drb_value, perl = TRUE)))
+          if (any(index2)) {
+            df[i, ifelse(j == 1, "DQA11", "DQA12")] <- equivalence_table[index[index2], "DQA1"]
+          } else {
+            next
+          }
         } else {
           next
         }
-      } else {
-        next
       }
+    } else {
+      next
     }
   }
   return(df)

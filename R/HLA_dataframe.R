@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-HLA_dataframe <- function(receptor_HLA, donor1_HLA, donor2_HLA, donor3_HLA, donor4_HLA, donor5_HLA){
+HLA_dataframe <- function(receptor_HLA, donor1_HLA = NA, donor2_HLA = NA, donor3_HLA = NA, donor4_HLA = NA, donor5_HLA = NA){
   samples <- list(receptor_HLA, donor1_HLA, donor2_HLA, donor3_HLA, donor4_HLA, donor5_HLA)
   names(samples) <- c("receptor", "donor_1", "donor_2", "donor_3", "donor_4", "donor_5")
   #Remove NA samples
@@ -46,6 +46,8 @@ HLA_dataframe <- function(receptor_HLA, donor1_HLA, donor2_HLA, donor3_HLA, dono
         column_name <- "DRB3451"
       } else if (grepl("^DQB1\\*", allele)){
         column_name <- "DQB11"
+      } else if (grepl("^DQA1\\*", allele)){
+        column_name <- "DQA11"
       }
       
      #Assign the allele to the first available column corresponding to the HLA type.
