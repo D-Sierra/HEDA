@@ -1,0 +1,89 @@
+---
+output: pdf_document
+params:
+  responsable: NA
+  ID: NA
+  verified: NA
+  exposition: NA
+  eplet_MM: NA
+  DL23_table: NA
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{graphicx}
+  - \usepackage{float}
+  - \definecolor{bluetitle}{HTML}{0071BC}
+always_allow_html: true
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+options(knitr.kable.NA = '')
+```
+
+
+\begin{huge}
+\textcolor{bluetitle}{DL2/3 report - Receptor `r params$ID`}
+\end{huge}
+
+Date of the report: `r Sys.Date()` \newline
+Author: `r params$responsable` \newline\newline
+
+**Parámetros del análisis**
+
+```{r}
+#Funcion que codifica la combinacion de mensajes que se imprimiran explicando los filtros usados para la seleccion de eplets
+conditional_text <- function(verified, exposition) {
+  verified_yes <- "For the evaluation of possible candidate specificities for delisting at the DL2/3 stage, only those eplets listed as verified by antibodies in the database https://www.epregistry.com.br/ have been taken into account."
+  verified_no <- "For the evaluation of potential candidate specificities for delisting at the DL2/3 stage, only those eplets listed as **no** antibody-verified in the database https://www.epregistry.com.br/ have been taken into account."
+  verified_all <- "For the evaluation of potential candidate specificities for delisting at the DL2/3 stage, all eplets have been taken into account regardless of whether they have been verified by antibodies or not, as listed in the database https://www.epregistry.com.br/."
+  exposition_high <- "With regard to the level of exposure of each eplet in the associated HLA molecules, only those eplets with a high degree of exposure have been taken into account."
+  exposition_intermediate <-  "With regard to the level of exposure of each eplet in the associated HLA molecules, only those eplets with an intermediate degree of exposure have been taken into account."
+  exposition_low <- "With regard to the level of exposure of each eplet in the associated HLA molecules, only those eplets with a low degree of exposure have been taken into account."
+  exposition_verylow <- "With regard to the level of exposure of each eplet in the associated HLA molecules, only those eplets with a very low degree of exposure have been taken into account."
+  exposition_all <- "On the other hand, the level of exposure of the eplets on the HLA molecules with which they are associated **has not** been taken into account for their selection."
+
+  mensaje_verified <- if (verified == "All") {
+    verified_all
+  } else if (verified == "Yes") {
+    verified_yes
+  } else if (verified == "No") {
+    verified_no
+  }
+
+  mensaje_exposition <- if (exposition == "All") {
+    exposition_all
+  } else if (exposition == "High") {
+    exposition_high
+  } else if (exposition == "Intermediate") {
+    exposition_intermediate
+  } else if (exposition == "Low") {
+    exposition_low
+  } else if (exposition == "Very Low") {
+    exposition_verylow
+  }
+
+  return(paste(mensaje_verified, mensaje_exposition))
+}
+```
+
+`r conditional_text(params$verified, params$exposition)`
+
+
+**Resultados DL2/3**
+
+The set of prohibited eplets for a given recipient has been defined as the set of eplets present in previous donors that are not associated with any HLA allele of the recipient.
+Based on the filtering criteria defined in the previous section, the complete list of prohibited eplets for the recipient **`r params$ID`** is as follows:
+
+`r params$eplet_MM`
+
+
+The specificities selected as candidates for DL2/3 phases are shown below. For each of them it is shown whether they contain any forbidden eplets for the **`r params$ID`** receptor, and based on this information, in which delisting phase they should be marked as allowed specificity:
+
+```{r}
+# Mostrar la tabla
+kable(params$DL23_table, format = "latex", booktabs = TRUE) %>%
+  kable_styling(latex_options = c("scale_down")) %>%
+  kableExtra::kable_styling(latex_options = "hold_position")
+```
+

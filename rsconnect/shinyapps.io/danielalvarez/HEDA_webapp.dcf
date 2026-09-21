@@ -1,0 +1,12 @@
+name: HEDA_webapp
+title: HEDA_webapp
+username: danielalvarez
+account: danielalvarez
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17965115
+bundleId: 12584731
+url: https://danielalvarez.shinyapps.io/HEDA_webapp/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
